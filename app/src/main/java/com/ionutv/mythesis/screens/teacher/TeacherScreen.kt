@@ -1,6 +1,7 @@
 package com.ionutv.mythesis.screens.teacher
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,13 +11,11 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -116,8 +115,20 @@ fun TeacherThesisScreen(
     modifier: Modifier = Modifier,
     teacherViewModel: TeacherViewModel = viewModel(),
 ) {
+    var shouldShowDialog by remember {
+        mutableStateOf(false)
+    }
+    val context = LocalContext.current
     val thesisItems by teacherViewModel.thesises.collectAsStateWithLifecycle()
     val revealedItems by teacherViewModel.revealedThesisesIdsList.collectAsStateWithLifecycle()
+    if(shouldShowDialog){
+        DialogForSendingComment(1){
+            shouldShowDialog = false
+            if(it.isNotEmpty()) {
+                Toast.makeText(context, "Submitted comment", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
     Column(
         modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
@@ -130,7 +141,9 @@ fun TeacherThesisScreen(
         }, actionsRow = { offsetDp ->
             TeacherThesisActionsRow(offsetDp,
                 onDelete = {},
-                onComment = {},
+                onComment = {
+                    shouldShowDialog = true
+                },
                 onAccept = {}
             )
         }) {

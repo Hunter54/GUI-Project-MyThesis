@@ -99,6 +99,7 @@ fun MainScreen() {
                 DrawerHeader()
                 DrawerBody(
                     items = listOf(NavigationDrawerItems.Teacher, NavigationDrawerItems.Student),
+                    navBackStackEntry = navBackStackEntry,
                     onItemClick = {
                         Toast.makeText(context, "Clicked on ${it.title}", Toast.LENGTH_LONG).show()
                         scope.launch {
