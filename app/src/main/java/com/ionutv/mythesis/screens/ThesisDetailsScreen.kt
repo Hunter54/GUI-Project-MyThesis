@@ -7,9 +7,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -39,8 +43,10 @@ fun ThesisDetailsScreen(itemNumber: Int, teacherViewModel: TeacherViewModel = vi
     var isBodyExpanded by remember {
         mutableStateOf(false)
     }
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        Card(modifier = Modifier.fillMaxWidth().padding(10.dp)) {
+    Column(modifier = Modifier.verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
+        Card(modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp)) {
             Column(Modifier.padding(10.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(text = item.title, fontWeight = FontWeight.Bold, fontSize = 24.sp)
                 Text(text = item.owner.name, fontSize = 24.sp)
@@ -92,6 +98,11 @@ fun ThesisDetailsScreen(itemNumber: Int, teacherViewModel: TeacherViewModel = vi
                     )
                 }
             }
+        }
+
+        Row(horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally), modifier = Modifier.padding(top=20.dp).clip(MaterialTheme.shapes.extraSmall).background(MaterialTheme.colorScheme.tertiaryContainer).clickable {  }.padding(8.dp)) {
+            Icon(imageVector = Icons.Default.Download , contentDescription = "Thesis Download Button")
+            Text("Download")
         }
     }
 }
