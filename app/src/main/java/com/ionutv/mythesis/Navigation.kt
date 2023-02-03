@@ -56,7 +56,7 @@ fun NavGraphBuilder.teacherGraph(navController: NavController) {
             TeacherDestinations.ProposedThesisDetails.route+"/{itemNr}",
             arguments = listOf(navArgument("itemNr") { type = NavType.IntType })
         ) {
-            ThesisDetailsScreen(it.arguments?.getInt("itemNr") ?: 0)
+            ThesisDetailsScreen(it.arguments?.getInt("itemNr") ?: 0, shouldShowBody = false)
         }
     }
 }

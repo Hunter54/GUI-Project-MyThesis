@@ -29,6 +29,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ionutv.mythesis.screens.teacher.thesis.MyThesisRow
+import com.ionutv.mythesis.screens.teacher.thesis.StudentProposedThesisRow
 import com.ionutv.mythesis.screens.teacher.thesis.ThesisItem
 import com.ionutv.mythesis.screens.teacher.thesis.ThesisRow
 import com.ionutv.mythesis.ui.*
@@ -179,7 +180,7 @@ fun TeacherStudentProposedScreen(
                 onAccept = {}
             )
         }) {item ->
-            ThesisRow(item = item) {
+            StudentProposedThesisRow(item = item) {
                 val itemIndex = thesisItems.indexOf(it)
                 navController.navigate(TeacherDestinations.ProposedThesisDetails.route + "/$itemIndex")
             }

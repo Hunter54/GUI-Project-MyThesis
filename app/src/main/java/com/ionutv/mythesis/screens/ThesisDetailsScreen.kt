@@ -27,7 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun ThesisDetailsScreen(itemNumber: Int, teacherViewModel: TeacherViewModel = viewModel()) {
+fun ThesisDetailsScreen(itemNumber: Int, teacherViewModel: TeacherViewModel = viewModel(), shouldShowBody: Boolean = true) {
     val item = ThesisItem(
         ThesisItem.Owner("Jhon Doe", Color.Cyan.copy(0.2f)),
         "Study of AI use in Crimes",
@@ -78,31 +78,48 @@ fun ThesisDetailsScreen(itemNumber: Int, teacherViewModel: TeacherViewModel = vi
                 }
             }
 
-            Card(shape = MaterialTheme.shapes.extraSmall) {
-                Column(
-                    modifier = Modifier
-                        .background(MaterialTheme.colorScheme.secondaryContainer)
-                        .animateContentSize()
-                        .clickable {
-                            isBodyExpanded = !isBodyExpanded
-                        }
-                        .padding(8.dp)
-                ) {
-                    Text(text = "Thesis Body:", fontSize = 22.sp, fontWeight = FontWeight.SemiBold)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = item.description,
-                        maxLines = if (isBodyExpanded) Int.MAX_VALUE else 8,
-                        overflow = TextOverflow.Ellipsis,
+            if(shouldShowBody){
+                Card(shape = MaterialTheme.shapes.extraSmall) {
+                    Column(
                         modifier = Modifier
-                    )
+                            .background(MaterialTheme.colorScheme.secondaryContainer)
+                            .animateContentSize()
+                            .clickable {
+                                isBodyExpanded = !isBodyExpanded
+                            }
+                            .padding(8.dp)
+                    ) {
+                        Text(
+                            text = "Thesis Body:",
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = item.description,
+                            maxLines = if (isBodyExpanded) Int.MAX_VALUE else 8,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier
+                        )
+                    }
                 }
             }
         }
 
-        Row(horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally), modifier = Modifier.padding(top=20.dp).clip(MaterialTheme.shapes.extraSmall).background(MaterialTheme.colorScheme.tertiaryContainer).clickable {  }.padding(8.dp)) {
-            Icon(imageVector = Icons.Default.Download , contentDescription = "Thesis Download Button")
-            Text("Download")
+        if(shouldShowBody){
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
+                modifier = Modifier
+                    .padding(top = 20.dp)
+                    .clip(MaterialTheme.shapes.extraSmall)
+                    .background(MaterialTheme.colorScheme.tertiaryContainer)
+                    .clickable { }
+                    .padding(8.dp)) {
+                Icon(
+                    imageVector = Icons.Default.Download,
+                    contentDescription = "Thesis Download Button"
+                )
+                Text("Download")
+            }
         }
     }
 }

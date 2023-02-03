@@ -69,7 +69,67 @@ fun ThesisRow(item: ThesisItem, modifier: Modifier = Modifier, onClick: (ThesisI
             )
 
         }
-        Column() {
+        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text(text = item.lastDate)
+            Text(text = "40%")
+        }
+    }
+}
+
+@Composable
+fun StudentProposedThesisRow(item: ThesisItem, modifier: Modifier = Modifier, onClick: (ThesisItem) -> Unit) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp, vertical = 8.dp)
+            .height(IntrinsicSize.Min)
+            .clickable {
+                onClick(item)
+            },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        val weight = if (item.isUnread) FontWeight.Bold else FontWeight.Light
+
+        Surface(
+            shape = CircleShape,
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .size(40.dp),
+            color = item.owner.color
+        ) {
+            Text(
+                text = item.owner.name.first().toString(),
+                modifier.wrapContentSize(Alignment.Center)
+            )
+        }
+        Column(
+            modifier = modifier
+                .padding(horizontal = 8.dp)
+                .weight(1f)
+        ) {
+            Text(
+                text = item.owner.name,
+                fontWeight = weight,
+                fontSize = 18.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                text = item.title,
+                fontWeight = weight,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                text = item.description,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                fontWeight = FontWeight.Light
+            )
+
+        }
+        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Text(text = item.lastDate)
         }
     }
